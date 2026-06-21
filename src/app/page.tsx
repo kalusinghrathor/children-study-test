@@ -210,7 +210,7 @@ export default function Home() {
                           : 'border-gray-200 bg-white text-gray-600 hover:border-orange-200'
                       }`}
                     >
-                      {s.emoji} {s.nameHi} ({s.total})
+                      {s.emoji} {s.name} ({s.total})
                     </button>
                   ))}
                 </div>
@@ -288,7 +288,7 @@ export default function Home() {
                     <span className="text-2xl">{s.emoji}</span>
                     <div>
                       <h3 className={`font-bold ${s.color}`}>{s.name}</h3>
-                      <p className="text-xs text-gray-500">{s.nameHi} • {s.total} Questions</p>
+                      <p className="text-xs text-gray-500">{s.total} Questions</p>
                     </div>
                   </div>
                   <div className="flex gap-2 text-xs">
