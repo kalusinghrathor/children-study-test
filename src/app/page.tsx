@@ -156,23 +156,46 @@ export default function Home() {
       <div className="min-h-screen flex flex-col bg-gradient-to-b from-amber-50 via-orange-50 to-yellow-50">
         {/* Header */}
         <header className="relative overflow-hidden bg-gradient-to-r from-orange-400 via-pink-400 to-purple-500">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiLz48L3N2Zz4=')] opacity-30" />
-          <div className="relative z-10 max-w-4xl mx-auto px-4 py-8 text-center">
-            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 200 }}>
-              <Brain className="w-16 h-16 text-white mx-auto mb-3" />
-            </motion.div>
-            <h1 className="text-3xl md:text-5xl font-black text-white mb-2" style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.15)' }}>
-              📚 Children Study Test
-            </h1>
-            <p className="text-white/90 text-base md:text-lg font-medium">
-              {questions.length}+ Questions • Test Your Knowledge! 🎯
-            </p>
-            <div className="flex flex-wrap justify-center gap-2 mt-4">
-              {subjectStats.map(s => (
-                <span key={s.key} className={`${s.bg} ${s.color} px-3 py-1 rounded-full text-sm font-bold border ${s.border}`}>
-                  {s.emoji} {s.name} ({s.total})
-                </span>
-              ))}
+          <div className="max-w-4xl mx-auto px-4 py-6">
+            <div className="flex items-center gap-4 md:gap-6">
+              {/* Image in top-left corner */}
+              <motion.div
+                className="shrink-0"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
+              >
+                <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-3xl overflow-hidden border-4 border-white shadow-2xl">
+                  <img
+                    src="/images/hero-image.webp"
+                    alt="Children Study Test"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </motion.div>
+
+              {/* Title text */}
+              <div className="flex-1 min-w-0">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-1.5" style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.15)' }}>
+                    📚 Children Study Test
+                  </h1>
+                  <p className="text-white/90 text-sm md:text-lg font-medium mb-3">
+                    {questions.length}+ Questions • Test Your Knowledge! 🎯
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {subjectStats.map(s => (
+                      <span key={s.key} className={`${s.bg} ${s.color} px-2.5 py-1 rounded-full text-xs font-bold border ${s.border}`}>
+                        {s.emoji} {s.name} ({s.total})
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </div>
         </header>
