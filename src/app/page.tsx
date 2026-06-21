@@ -8,6 +8,7 @@ import {
   ChevronRight, BarChart3, Clock, Award
 } from 'lucide-react'
 import { Card } from '@/components/ui/card'
+import Image from 'next/image'
 import { questions, subjectInfo, type SubjectName, type Difficulty, type Question } from '@/lib/questions'
 
 // ==================== TYPES ====================
@@ -165,11 +166,13 @@ export default function Home() {
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
               >
-                <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-3xl overflow-hidden border-4 border-white shadow-2xl">
-                  <img
+                <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-3xl overflow-hidden border-4 border-white shadow-2xl relative">
+                  <Image
                     src="/images/hero-image.webp"
                     alt="Children Study Test"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    priority
                   />
                 </div>
               </motion.div>
