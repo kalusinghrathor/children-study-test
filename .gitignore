@@ -36,7 +36,6 @@ yarn-error.log*
 # vercel
 .vercel
 
-
 # typescript
 *.tsbuildinfo
 next-env.d.ts
@@ -50,5 +49,29 @@ test
 prompt
 
 server.log
+
 # Skills directory
 /skills/
+
+# Examples & mini-services (not needed for live)
+/examples/
+/mini-services/
+
+# Worklog (internal)
+worklog.md
+
+# DB files (not needed for live - questions are in code)
+/db/
+
+# Download folder
+/download/
+
+# Unused images
+/public/images/art-character.png
+/public/images/english-character.png
+/public/images/hero-banner.png
+/public/images/hindi-character.png
+/public/images/math-character.png
+/public/images/music-character.png
+/public/images/owl-mascot.png
+/public/images/science-character.png
