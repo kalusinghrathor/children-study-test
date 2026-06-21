@@ -268,7 +268,7 @@ export default function Home() {
               <div className="mb-5">
                 <label className="block text-sm font-semibold text-gray-600 mb-2">📝 Number of Questions</label>
                 <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-                  {[10, 20, 30, 50, 100, filteredCount].map(count => (
+                  {[10, 20, 30, 50, 100, filteredCount].filter(count => count < filteredCount || count === filteredCount).filter((count, i, arr) => arr.indexOf(count) === i).map(count => (
                     <button
                       key={count}
                       onClick={() => setConfig(c => ({ ...c, count }))}
@@ -340,37 +340,40 @@ export default function Home() {
     const answeredSoFar = results.correct + results.wrong
 
     return (
-      <div className="min-h-screen flex flex-col bg-gradient-to-b from-amber-50 via-orange-50 to-yellow-50">
+      <div className="min-h-screen flex flex-col bg-gradient-to-b from-amber-50 via-orange-50 to-yellow-50 overflow-x-hidden">
         {/* Top Bar */}
         <div className="sticky top-0 z-20 bg-white/90 backdrop-blur border-b border-orange-200 shadow-sm">
           <div className="max-w-4xl mx-auto px-4 py-3">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-bold text-gray-800">
+            <div className="flex flex-wrap items-center justify-between gap-y-1 mb-2">
+              <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                <span className="text-base sm:text-lg font-bold text-gray-800 shrink-0">
                   Q{currentIndex + 1}/{testQuestions.length}
                 </span>
-                <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                <span className={`px-1.5 sm:px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold shrink-0 ${
                   q.difficulty === 'easy' ? 'bg-green-100 text-green-700' :
                   q.difficulty === 'medium' ? 'bg-yellow-100 text-yellow-700' :
                   'bg-red-100 text-red-700'
                 }`}>
                   {q.difficulty === 'easy' ? '🟢 Easy' : q.difficulty === 'medium' ? '🟡 Medium' : '🔴 Hard'}
                 </span>
-                <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${subjectInfo[q.subject].bg} ${subjectInfo[q.subject].color}`}>
+                <span className={`hidden sm:inline-flex px-2 py-0.5 rounded-full text-xs font-bold ${subjectInfo[q.subject].bg} ${subjectInfo[q.subject].color}`}>
                   {subjectInfo[q.subject].emoji} {subjectInfo[q.subject].name}
                 </span>
+                <span className={`sm:hidden px-1.5 py-0.5 rounded-full text-[10px] font-bold ${subjectInfo[q.subject].bg} ${subjectInfo[q.subject].color}`}>
+                  {subjectInfo[q.subject].emoji}
+                </span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1 text-sm text-gray-600">
-                  <CheckCircle2 className="w-4 h-4 text-green-500" />
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-600">
+                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-500" />
                   <span className="font-bold">{correctSoFar}</span>
                 </div>
-                <div className="flex items-center gap-1 text-sm text-gray-600">
-                  <XCircle className="w-4 h-4 text-red-500" />
+                <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-600">
+                  <XCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-500" />
                   <span className="font-bold">{results.wrong}</span>
                 </div>
-                <div className="flex items-center gap-1 text-sm text-gray-600 bg-orange-50 px-2 py-1 rounded-full">
-                  <Clock className="w-4 h-4 text-orange-500" />
+                <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-600 bg-orange-50 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">
+                  <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-500" />
                   <span className="font-bold text-orange-700">{formatTime(timer)}</span>
                 </div>
               </div>
@@ -644,7 +647,7 @@ export default function Home() {
                           </span>
                           <div className="flex-1">
                             <p className="text-sm font-semibold text-gray-700">Q{i + 1}: {q.question}</p>
-                            {!isSkipped && !isCorrect && (
+                            {(isSkipped || !isCorrect) && (
                               <p className="text-xs text-emerald-600 mt-1">
                                 ✓ Correct: {q.options[q.answer]}
                               </p>
@@ -652,6 +655,11 @@ export default function Home() {
                             {!isSkipped && (
                               <p className={`text-xs ${isCorrect ? 'text-emerald-500' : 'text-red-500'}`}>
                                 {isCorrect ? '✓' : '✗'} Your answer: {q.options[ans!]}
+                              </p>
+                            )}
+                            {isSkipped && (
+                              <p className="text-xs text-gray-500">
+                                ⏭️ Skipped
                               </p>
                             )}
                           </div>
@@ -664,9 +672,7 @@ export default function Home() {
                 {/* Actions */}
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <motion.button
-                    onClick={() => {
-                      setView('home')
-                    }}
+                    onClick={restartTest}
                     className="px-8 py-3 rounded-2xl border-2 border-orange-300 bg-orange-50 text-orange-700 font-bold hover:bg-orange-100 transition-all"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
